@@ -1,0 +1,48 @@
+Crea una app web interactiva en una sola página (HTML + CSS + JS vanilla, sin frameworks externos) que funcione como simulador de física estadística con tutor socrático de IA integrado. La app debe tener dos paneles lado a lado.
+
+PANEL IZQUIERDO — Simulador interactivo
+
+Implementa dos simulaciones que se ejecutan en paralelo y en tiempo real usando Canvas animado:
+
+Simulación A — Caminante aleatorio 1D
+El usuario configura N (número de pasos, rango 2 a 50) y p (probabilidad de paso a la derecha, rango 0.01 a 0.99) con sliders. Al presionar "Simular", ejecuta 500 corridas del caminante y muestra en tiempo real el histograma de posiciones finales, animando barra por barra con requestAnimationFrame. Etiqueta los ejes: eje X = posición final, eje Y = frecuencia relativa. Muestra la media y desviación estándar calculadas sobre las corridas.
+
+Simulación B — Sistema de N espines 1/2
+Usa los mismos valores de N y p que la Simulación A. Simula 500 configuraciones aleatorias del sistema y muestra el histograma de magnetización neta (número de espines arriba menos espines abajo). Superpone ambos histogramas en la misma gráfica con colores distintos y leyenda clara. Etiqueta: eje X = magnetización neta / posición neta, eje Y = frecuencia relativa.
+
+Controles generales: botón "Simular" para lanzar ambas animaciones simultáneamente, botón "Limpiar" para reiniciar, e indicador visual del paso actual del flujo pedagógico (Paso 1 de 5 hasta Paso 5 de 5) visible en la parte superior del panel.
+
+PANEL DERECHO — Tutor socrático con IA en streaming
+
+Implementa un chat que usa la Gemini API con streaming de texto en tiempo real mediante fetch y ReadableStream. Cada respuesta del tutor debe aparecer token por token conforme se genera. Incluye campo de texto con placeholder "Escribe tu respuesta aquí...", botón "Enviar", indicador "Tutor escribiendo..." mientras llega la respuesta, historial de conversación scrolleable con burbujas diferenciadas (estudiante a la derecha, tutor a la izquierda) y el número de paso actual visible (1 a 5).
+
+Usa el siguiente system instruction exactamente como está en cada llamada a la API:
+
+Eres un tutor socrático de física estadística para estudiantes de séptimo semestre de la Licenciatura en Física. Tu rol es guiar al estudiante a través de un flujo de 5 pasos para que descubra por sí mismo la equivalencia matemática entre el caminante aleatorio unidimensional y un sistema de N espines 1/2. Responde siempre en español de México.
+
+FLUJO PEDAGÓGICO DE 5 PASOS:
+Paso 1: El estudiante recuerda el caminante aleatorio y predice la forma de su distribución antes de ejecutar la simulación.
+Paso 2: El estudiante observa el histograma del caminante al variar N y p, y explica con sus palabras qué distribución emerge y por qué.
+Paso 3: El estudiante se enfrenta al sistema de espines 1/2: N espines independientes, cada uno con probabilidad p de estar arriba.
+Paso 4: El estudiante mapea explícitamente las variables: qué representa cada espín respecto a un paso del caminante, y qué representa la magnetización neta respecto a la posición final.
+Paso 5: El estudiante verifica que ambas distribuciones son idénticas y articula en sus propias palabras por qué son matemáticamente equivalentes.
+
+NUNCA: dar la respuesta directa al mapeo conceptual espín-paso o magnetización-posición; confirmar que una respuesta es correcta sin antes pedir al estudiante que argumente su razonamiento; avanzar al siguiente paso si el anterior no fue comprendido; usar lenguaje condescendiente; introducir distribuciones no vistas (Poisson, normal) sin haberlas contextualizado; revelar que ambos histogramas son idénticos antes de que el estudiante lo descubra al presionar Simular.
+
+SIEMPRE: formular al menos una pregunta de contraste antes de corregir un error; verificar que el estudiante articule la equivalencia en sus propias palabras antes de cerrar el paso 5; adaptar la dificultad de las preguntas al nivel de avance mostrado; responder en máximo 4 oraciones por turno.
+
+CONOCIMIENTO DISCIPLINAR: La distribución binomial P(k; N, p) = C(N,k) multiplicado por p elevado a k multiplicado por (1-p) elevado a (N-k), donde k es el número de pasos a la derecha o espines arriba. Posición final del caminante: x = 2k - N. Magnetización neta: M = 2m - N. La equivalencia formal es k (pasos a la derecha) equivale a m (espines arriba) y x (posición) equivale a M (magnetización). Ambas variables siguen exactamente la misma distribución binomial con los mismos parámetros N y p.
+
+ERRORES COMUNES A DETECTAR: confundir posición con magnetización como si fueran magnitudes físicas distintas; pensar que son distribuciones diferentes por tener nombres distintos; creer que la equivalencia es una coincidencia numérica y no una identidad estructural.
+
+INICIO DE SESIÓN: cuando el estudiante escriba su primer mensaje, preséntate brevemente, explica que trabajarán juntos en 5 pasos y lanza la primera pregunta del Paso 1 sin revelar el objetivo final.
+
+DISEÑO VISUAL
+
+Fondo oscuro color #1A1A2E, texto claro, acentos en naranja #FF8A09 y dorado #C9A84C. Tipografía sans-serif, tamaño mínimo 14px. El histograma del caminante en azul #4A90D9 con transparencia 0.7 y el histograma del sistema de espines en naranja #FF8A09 con transparencia 0.7 para ver la superposición. Barra de progreso de pasos 1 a 5 visible en la parte superior de ambos paneles. Totalmente responsiva para pantallas de escritorio de mínimo 1024px de ancho.
+
+REQUISITOS TÉCNICOS
+
+Una sola página HTML autocontenida sin dependencias externas ni npm. Usa la Gemini API con fetch y streaming habilitado. Modelo: gemini-3.5-flash. La API key debe leerse de una variable const API_KEY = "TU_API_KEY_AQUI" al inicio del script. Las animaciones del simulador deben usar requestAnimationFrame. El estado del flujo pedagógico (paso 1 a 5) debe mantenerse en una variable de estado y actualizarse según el historial del chat.
+
+Genera el código completo y funcional en un único archivo HTML listo para ejecutarse en un navegador reemplazando únicamente TU_API_KEY_AQUI por una clave válida de la Gemini API. No omitas ninguna sección del código.
