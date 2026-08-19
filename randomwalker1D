@@ -1,0 +1,72 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Set random seed for reproducibility
+np.random.seed(42)
+
+
+def simulate_1d_random_walk(num_steps, num_walks=1):
+    """Simulates one-dimensional random walks.
+
+    Parameters:
+    num_steps (int): The number of steps to take in each walk.
+    num_walks (int): The number of independent walks to simulate.
+
+    Returns:
+    ndarray: A 2D array of shape (num_steps + 1, num_walks) containing positions.
+    """
+    # Step choices: -1 (left) or +1 (right) with equal probability (0.5)
+    step_choices = np.array([-1, 1])
+
+    # Generate random steps for all walks simultaneously
+    # Shape will be (num_steps, num_walks)
+    steps = np.random.choice(step_choices, size=(num_steps, num_walks))
+
+    # All walks start at position 0
+    origin = np.zeros((1, num_walks))
+
+    # Stack the origin onto the steps matrix
+    all_steps = np.vstack([origin, steps])
+
+    # Compute the cumulative sum along the steps axis to get positions over time
+    positions = np.cumsum(all_steps, axis=0)
+
+    return positions
+
+
+# --- Configuration ---
+STEPS = 1000  # Number of coin flips/steps
+WALKS = 5  # Number of separate trajectories to display
+
+# Run simulation
+walk_data = simulate_1d_random_walk(num_steps=STEPS, num_walks=WALKS)
+time_axis = np.arange(STEPS + 1)
+
+# --- Visualization ---
+plt.figure(figsize=(10, 6))
+
+# Plot each random walk trajectory
+for i in range(WALKS):
+    plt.plot(
+        time_axis,
+        walk_data[:, i],
+        linewidth=1.5,
+        label=f"Walk {i+1}",
+        alpha=0.8,
+    )
+
+# Visual enhancements
+plt.axhline(0, color="black", linestyle="--", linewidth=1, alpha=0.7)
+plt.title(
+    f"Simulation of {WALKS} Independent 1D Random Walks",
+    fontsize=14,
+    fontweight="bold",
+)
+plt.xlabel("Number of Steps (Time)", fontsize=12)
+plt.ylabel("Position", fontsize=12)
+plt.grid(True, linestyle=":", alpha=0.6)
+plt.legend(loc="upper left")
+
+# Show the plot
+plt.tight_layout()
+plt.show()
