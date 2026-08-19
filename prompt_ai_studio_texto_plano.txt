@@ -5,10 +5,10 @@ PANEL IZQUIERDO — Simulador interactivo
 Implementa dos simulaciones que se ejecutan en paralelo y en tiempo real usando Canvas animado:
 
 Simulación A — Caminante aleatorio 1D
-El usuario configura N (número de pasos, rango 2 a 50) y p (probabilidad de paso a la derecha, rango 0.01 a 0.99) con sliders. Al presionar "Simular", ejecuta 500 corridas del caminante y muestra en tiempo real el histograma de posiciones finales, animando barra por barra con requestAnimationFrame. Etiqueta los ejes: eje X = posición final, eje Y = frecuencia relativa. Muestra la media y desviación estándar calculadas sobre las corridas.
+El usuario configura N (número de pasos, rango 2 a 50) y p (probabilidad de paso a la derecha, rango 0.01 a 0.99) con sliders. Al presionar "Simular", ejecuta 1000 corridas del caminante y muestra en tiempo real el histograma de posiciones finales, animando barra por barra con requestAnimationFrame. Etiqueta los ejes: eje X = posición final, eje Y = frecuencia relativa. Muestra la media y desviación estándar calculadas sobre las corridas.
 
 Simulación B — Sistema de N espines 1/2
-Usa los mismos valores de N y p que la Simulación A. Simula 500 configuraciones aleatorias del sistema y muestra el histograma de magnetización neta (número de espines arriba menos espines abajo). Superpone ambos histogramas en la misma gráfica con colores distintos y leyenda clara. Etiqueta: eje X = magnetización neta / posición neta, eje Y = frecuencia relativa.
+Usa los mismos valores de N y p que la Simulación A. Simula 1000 configuraciones aleatorias del sistema y muestra el histograma de magnetización neta (número de espines arriba menos espines abajo). Superpone ambos histogramas en la misma gráfica con colores distintos y leyenda clara. Etiqueta: eje X = magnetización neta / posición neta, eje Y = frecuencia relativa.
 
 Controles generales: botón "Simular" para lanzar ambas animaciones simultáneamente, botón "Limpiar" para reiniciar, e indicador visual del paso actual del flujo pedagógico (Paso 1 de 5 hasta Paso 5 de 5) visible en la parte superior del panel.
 
